@@ -20,15 +20,6 @@ html {
     background-color: #000000;
 }
 
-.align-section {
-    display: flex;
-    height: 100vh;
-    width: 70vw;
-    justify-content: center;
-    align-items: center;
-    background-color: blue;
-}
-
 .navbar {
     background-color: #000000;
     width: 100%;
@@ -73,6 +64,8 @@ html {
     transition-duration: 0.3s;
 }
 
+/* --- index --- */
+
 .index .flex-container {
     color: #fff;
     display: flex;
@@ -83,16 +76,16 @@ html {
     align-items: center;
 }
 
-.start-button {
+.index .start-button {
     position: absolute;
     top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.button {
+.index .button {
     border: 1px solid #0095FF;
-    color: white;
+    color: #fff;
     background: none;
     text-align: center;
     padding: 20px;
@@ -102,12 +95,12 @@ html {
     border-radius: 100px;
 }
 
-.button:hover {
+.index .button:hover {
     background-color: #0095FF;
 }
 
-.index-typewriter > .txt {
-    border-right: 0.1rem solid white;
+.index .index-typewriter > .txt {
+    border-right: 0.1rem solid #fff;
     white-space: pre;
     font-size: 50px;
 }
@@ -119,7 +112,7 @@ html {
     flex-direction: row;
 }
 
-.auth-form {
+.content .auth-form {
     width: 70%;
     height: 100vh;
     background-color: #fff;
@@ -132,8 +125,8 @@ html {
 .form-info {
     width: 30%;
     height: 100vh;
-    color: white;
-    background-color: black;
+    color: #fff;
+    background-color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -151,36 +144,39 @@ html {
     color: #000000;
 }
 
-label[for="email"], [for="password"] {
+.content label[for="email"], [for="password"] {
     display: block;
     font-size: 18px;
     padding: 5px 0 5px 10px;
 }
 
-input[type="email"], [type="password"], [type="submit"] {
+.content input[type="email"], [type="password"], [type="submit"] {
     padding: 10px;
     width: 500px;
     font-size: 15px;
     border: 1px solid rgb(99, 99, 99);
     border-radius: 25px;
-    color: black;
+    color: #000000;
 }
 
-input[type="email"]:focus, [type="password"]:focus {
+.content input[type="email"]:focus, [type="password"]:focus {
     border: 1px solid #0095FF;
     outline: none;
 }
 
-input[type="submit"]:hover {
-    background-color: #0095FF;
-    color: white;
-}
-
-input[type="submit"] {
+.content input[type="submit"] {
     border: 1px solid #0095FF;
+    color: #000000;
+    background-color: white;
+
 }
 
-.info-description {
+.content input[type="submit"]:hover {
+    background-color: #0095FF;
+    color: #fff;
+}
+
+.content .info-description {
     font-size: 18px;
     text-align: center;
 }
@@ -191,12 +187,87 @@ input[type="submit"] {
 
 /* ------------ about ---------------- */
 
-.about .flex-container {
+.about {
+    height: fit-content;
+}
+
+.about .last-container {
     display: flex;
     width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    background-color: #fff;
     justify-content: center;
 }
 
+.about .flex-container {
+    display: flex;
+    width: 95vw;
+    border-radius: 20px;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.about .product-info {
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.about .title {
+    padding: 20px 0 0 0;
+    font-size: 30px;
+}
+
+.about .flex-details {
+    max-width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.about .item {
+    padding: 10px;
+    margin: 10px;
+    background-color: #0095FF;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+    transition: 0.5s;
+    box-shadow: 10px 10px #0095ff52;
+}
+
+.about .item:hover {
+    transform: translateY(-10px);
+}
+
+.about .author-links {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.about .button {
+    color: white;
+    margin: 30px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.about .linkedin {
+    background-color: #36b5ff;
+}
+
+.about .github {
+    background-color: #ff1616;
+}
+
+.about .button:hover {
+    color: #000000;
+    background-color: white;
+    transition: 0.5s;
+}
