@@ -19,7 +19,7 @@ class AutoApply:
         self.password = password
         self.q_num = 4
         self.options = Options()
-        self.options.headless = False   # For debugging purposes, change to True
+        self.options.headless = True
     
     def open_url_iframe(self, url, refresh_page = True):
         self.driver = self.create_driver()
