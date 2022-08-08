@@ -14,11 +14,19 @@ html {
 .container {
     width: 100vw;
     height: 100vh;
+}
+
+.black-bg {
     background-color: #000000;
 }
 
-.content {
-    background-color: #fff;
+.align-section {
+    display: flex;
+    height: 100vh;
+    width: 70vw;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
 }
 
 .navbar {
@@ -45,6 +53,10 @@ html {
     color: #fff;
 }
 
+.navbar .logo {
+    font-weight: bold;
+}
+
 .navbar ul {
     list-style: none;
     display: flex;
@@ -61,8 +73,8 @@ html {
     transition-duration: 0.3s;
 }
 
-.website-index {
-    color: white;
+.index .flex-container {
+    color: #fff;
     display: flex;
     height: 100%;
     width: 100%;
@@ -102,12 +114,30 @@ html {
 
 /* ----- authentication.html ------ */
 
-.flex-container {
+.content .flex-container {
     display: flex;
-    height: 100%;
-    width: 100%;
+    flex-direction: row;
+}
+
+.auth-form {
+    width: 70%;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0 20px 20px 0;
+}
+
+.form-info {
+    width: 30%;
+    height: 100vh;
+    color: white;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 .form-title {
@@ -123,6 +153,7 @@ html {
 
 label[for="email"], [for="password"] {
     display: block;
+    font-size: 18px;
     padding: 5px 0 5px 10px;
 }
 
@@ -135,8 +166,9 @@ input[type="email"], [type="password"], [type="submit"] {
     color: black;
 }
 
-input[type="email"]:hover, [type="password"]:hover {
+input[type="email"]:focus, [type="password"]:focus {
     border: 1px solid #0095FF;
+    outline: none;
 }
 
 input[type="submit"]:hover {
@@ -148,4 +180,23 @@ input[type="submit"] {
     border: 1px solid #0095FF;
 }
 
-/* ------------ edit-details ---------------- */
+.info-description {
+    font-size: 18px;
+    text-align: center;
+}
+
+.blackspace {
+    background-color: #000000;
+}
+
+/* ------------ about ---------------- */
+
+.about .flex-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: #fff;
+    justify-content: center;
+}
+

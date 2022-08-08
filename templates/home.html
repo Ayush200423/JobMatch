@@ -9,25 +9,25 @@
     <script src="js/homepage.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="navbar">
-            <div class="nav-container">
-                <a class="logo" href="home.html">JobMatch</a>
-                <ul class="navbar-items">
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="#">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                </ul>
-            </div>
+    <div class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="home.html">JobMatch</a>
+            <ul class="navbar-items">
+                <li>
+                    <a href="#index">Home</a>
+                </li>
+                <li>
+                    <a href="#sign-in">Login</a>
+                </li>
+                <li>
+                    <a href="#about">About</a>
+                </li>
+            </ul>
         </div>
+    </div>
 
-        <div class="website-index">
+    <div class="index container black-bg" id="index">
+        <div class="flex-container">
             <div class="type-writer">
                 <p>JobMatch |
                     <span class="index-typewriter"></span>
@@ -36,31 +36,56 @@
         </div>
 
         <div class="start-button">
-            <a class="button" href="#google">Get Started</a>
+            <a class="button" href="#sign-in">Get Started</a>
         </div>
     </div>
 
-    <div class="content container" id="google">
+    <div class="content container black-bg" id="sign-in">
         <div class="flex-container">
-            <form action="edit-details.html">
-                <div class="form-title">
-                    Sign in or Create an Account to <span><a href="https://www.careerjet.com">Careerjet</a></span>
+            <div class="auth-form">
+                <form action="upload_resume.html">
+                    <div class="form-title">
+                        Sign in or Create an Account to <span><a target="_blank" href="https://www.careerjet.com">Careerjet</a></span>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" data-input="input-value" required>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password" data-input="input-value" required>
+                    </div>
+                    <br>
+                    <div>
+                        <input type="submit" class="button">
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-info">
+                <div class="info-description">
+                    To use JobMatch, you must login / register to Careerjet.
+                    <br><br>
+                    For verification purposes, a __ digit passcode will be sent to the specified address.
+                    Please check your spam folder if you are unable to find it.
+                    <br><br>
+                    Note: User data is <u>not</u> stored inside of a database.
                 </div>
-                <br>
-                <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email" data-input="input-value" required>
-                </div>
-                <br>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password" data-input="input-value" required>
-                </div>
-                <br>
-                <div>
-                    <input type="submit" class="button">
-                </div>
-            </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="blackspace">
+        <br><br>
+    </div>
+
+    <div class="about container black-bg" id="about">
+        <div class="flex-container">
+            <div class="title">
+                What is JobMatch?
+            </div>
         </div>
     </div>
 

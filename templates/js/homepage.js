@@ -1,4 +1,4 @@
-window.addEventListener("load", init);
+window.addEventListener("load", TypewriterInit);
 
 class TypeWriter {
   constructor(spanElement, sentences, wait = 1500) {
@@ -35,13 +35,13 @@ class TypeWriter {
       this.sentenceIndex++;
       typeSpeed = 300;
     }
-
     setTimeout(() => this.type(), typeSpeed)
   }
 }
 
-function init() {
+function TypewriterInit() {
   const spanElement = document.querySelector('.index-typewriter');
   const sentences = ["Upload Your Resume", "Review Your Details", "Apply Within Seconds"]
   new TypeWriter(spanElement, sentences, wait = 1500)
 }
+
