@@ -7,7 +7,6 @@
     <title>JobMatch</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
     <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename = 'js/homepage.js')}}"></script>
 </head>
 <body>
     <div class="navbar">
@@ -43,7 +42,7 @@
     <div class="content container black-bg" id="sign-in">
         <div class="flex-container">
             <div class="auth-form">
-                <form action="upload_resume.html">
+                <form action="#" method="post">
                     <div class="form-title">
                         Sign in or Create an Account to <span><a target="_blank" href="https://www.careerjet.com">Careerjet</a></span>
                     </div>
@@ -66,7 +65,7 @@
 
             <div class="form-info">
                 <div class="info-description">
-                    To use JobMatch, you must login / register to Careerjet.
+                    You must login / register to Careerjet for some JobMatch features to function correctly.
                     <br><br>
                     Note: User data is <u>not</u> stored inside of our database.
                 </div>
@@ -152,5 +151,6 @@
         <br><br>
     </div>
 
+    <script src="{{ url_for('static', filename = 'js/homepage.js')}}"></script>
 </body>
 </html>
