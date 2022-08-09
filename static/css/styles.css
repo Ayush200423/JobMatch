@@ -64,7 +64,7 @@ html {
     transition-duration: 0.3s;
 }
 
-/* --- index --- */
+/* -------- index --------- */
 
 .index .flex-container {
     color: #fff;
@@ -105,7 +105,7 @@ html {
     font-size: 50px;
 }
 
-/* ----- authentication.html ------ */
+/* ----- authentication ------ */
 
 .content .flex-container {
     display: flex;
@@ -185,7 +185,7 @@ html {
     background-color: #000000;
 }
 
-/* ------------ about ---------------- */
+/* ------------ about ------------- */
 
 .about {
     height: fit-content;
@@ -270,4 +270,87 @@ html {
     color: #000000;
     background-color: white;
     transition: 0.5s;
+}
+
+/* ---------- upload.html -------- */
+
+.upload {
+    width: 100vw;
+    height: 100vh;
+}
+
+.upload .flex-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload .form-title {
+    font-size: 30px;
+}
+
+.upload .upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload .upload-icon {
+    font-size: 45px;
+}
+
+.upload .upload-label {
+    padding: 70px 200px;
+    margin: 30px auto 20px auto;
+    border: 3px solid #000000;
+    border-radius: 15px;
+    transition: 1s;
+    text-align: center;
+}
+
+.upload .upload-label:hover {
+    border: 3px solid #0095FF;
+    transform: translateY(-10px);
+    color: #0095FF;
+    background-color: #0095ff0b;
+}
+
+.upload input[type="submit"] {
+    background-color: #fff;
+    transition: 0.5s;
+    border: 1px solid #000000;
+    font-size: 15px;
+}
+
+.upload input[type="submit"]:hover {
+    background-color: #0095FF;
+    color: white;
+    border: 1px solid #0095FF;
+}
+
+.upload .description-text {
+    padding: 20px;
+    margin: 20px;
+    max-width: 50vw;
+    text-align: center;
+    background-color: #0095ff36;
+    border-radius: 20px;
+}
+
+.upload .uploaded-file-name {
+    padding: 10px;
+    margin: 0 0 20px 0;
+    color: #fff;
+    text-align: center;
+    background-color: #0095FF;
+    border-radius: 10px;
+    transition: 0.5s;
+    cursor: default;
+}
+
+.upload .uploaded-file-name:hover {
+    background-color: #0066ff;
 }
