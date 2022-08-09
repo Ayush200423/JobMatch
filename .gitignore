@@ -1,5 +1,6 @@
 .venv/
 db_setup.py
+secret_key.py
 /resumeparser/convert_data.py
 
 # Byte-compiled / optimized / DLL files
