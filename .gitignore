@@ -1,7 +1,10 @@
 .venv/
 db_setup.py
 secret_key.py
+serviceAccount.json
+storage_config.py
 /resumeparser/convert_data.py
+active_files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
