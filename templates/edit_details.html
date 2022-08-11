@@ -11,11 +11,10 @@
 <body>
     <div class="edit-details">
         <div class="flex-container">
-
             <div class="title">
                 Edit Details
             </div>
-    
+
             <form action="#" class="edit-form raise-elements" method="post">
                 <div class="personal-info">
                     <div class="section-title">
@@ -29,26 +28,25 @@
                     <div class="row">
                         <div class="field name">
                             <label class="label" for="fname">First Name</label>
-                            <input class="f name" name="fname" placeholder="First Name" required>
+                            <input id="fname" name="fname" placeholder="First Name" required>
                         </div>
 
                         <div class="field name">
                             <label class="label" for="lname">Last Name</label>
-                            <input name="lname" placeholder="Last Name" required>
+                            <input id="lname" name="lname" placeholder="Last Name" required>
                         </div>
 
                         <div class="field email">
                             <label class="label" for="email">Email</label>
-                            <input type="email" name="email" placeholder="Email" required>
+                            <input id="email" type="email" name="email" placeholder="Email" required>
                         </div>
 
                         <div class="field phone">
                             <label class="label" for="phone">Phone Number</label>
-                            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" placeholder="Phone (XXX-XXX-XXXX)" required>
+                            <input id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" placeholder="Phone (XXX-XXX-XXXX)" required>
                         </div>
                     </div>
                 </div>
-
                 <div class="education-info">
                     <div class="section-title">
                         <div class="section-icon">
@@ -61,21 +59,20 @@
                     <div class="row">
                         <div class="field education">
                             <label class="label" for="school-name">School Name</label>
-                            <input name="school-name" placeholder="School Name" required>
+                            <input id="school" name="school-name" placeholder="School Name" required>
                         </div>
 
                         <div class="field education">
                             <label class="label" for="certifications">Degrees / Certifications</label>
-                            <input name="certifications" placeholder="Certifications" required>
+                            <input id="certifications" name="certifications" placeholder="Certifications" required>
                         </div>
                         
                         <div class="field grad-year">
                             <label class="label" for="graduation-year">Graduation Year</label>
-                            <input type="number" name="graduation-year" placeholder="Graduation Year" required>
+                            <input id="graduation-year" type="number" name="graduation-year" placeholder="Graduation Year" required>
                         </div>
                     </div>
                 </div>
-
                 <div class="work-info">
                     <div class="section-title">
                         <div class="section-icon">
@@ -88,39 +85,36 @@
                     <div class="row">
                         <div class="field years-of-experience">
                             <label class="label" for="yearsofexp">Years of Experience</label>
-                            <input type="number" name="yearsofexp" placeholder="Years of Experience" required>
+                            <input id="years-of-experience" type="number" name="yearsofexp" placeholder="Years of Experience" required>
                         </div>
 
                         <div class="field skills">
                             <label class="label" for="skills">Skills</label>
-                            <input name="skills" placeholder="Skills (separate with commas)" required>
+                            <input id="skills" name="skills" placeholder="Skills (separate with commas)" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="field work-experience">
                             <label class="label" for="company">Company</label>
-                            <input name="company" placeholder="Company Name" required>
+                            <input id="company" name="company" placeholder="Company Name" required>
                         </div>
 
                         <div class="field work-experience">
                             <label class="label" for="role">Role</label>
-                            <input name="role" placeholder="Role" required>
+                            <input id="role" name="role" placeholder="Role" required>
                         </div>
 
                         <div class="field work-experience">
-                            <label class="label" for="role">Location</label>
-                            <input name="location" placeholder="Location" required>
+                            <label class="label" for="location">Location</label>
+                            <input id="location" name="location" placeholder="Location" required>
                         </div>
                     </div>
                 </div>
-
                 <input type="submit">
             </form>
-
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename = 'js/app.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
 </body>
 </html>
