@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
     <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
-    <title>Upload Files</title>
+    <script src="{{ url_for('static', filename = 'js/app.js')}}"></script>
 </head>
 <body>
     <div class="upload">
         <div class="flex-container">
-
             <div class="form-title">
                 Upload Your Resume
             </div>  
-
             <form action="#" class="upload-form" method="post" enctype="multipart/form-data">
                 <input type="file" id="file-box" name="resume-file" accept="application/pdf" required hidden>
                 <label for="file-box" class="upload-label">
@@ -27,7 +26,6 @@
                 <div class="file-name-textbox"></div>
                 <input type="submit" value="Upload" class="Here">
             </form>
-
             <div class="description-text raise-elements">
                 Once you upload your resume, our NLP Machine Learning model will parse and extract relevent information about you. 
                 <br><br>
@@ -36,6 +34,10 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename = 'js/app.js')}}"></script>
+    <script>
+        var fileInput = document.querySelector('#file-box');
+        const textbox = document.querySelector('.file-name-textbox')
+        fileInput.addEventListener('change', showFileName);
+    </script>
 </body>
 </html>

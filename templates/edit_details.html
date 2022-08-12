@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Details</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
     <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
-    <title>Edit Details</title>
+    <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
+    <script>
+        window.addEventListener('load', getEntsData);
+    </script>
 </head>
 <body>
     <div class="edit-details">
@@ -115,6 +119,5 @@
             </form>
         </div>
     </div>
-    <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
 </body>
 </html>

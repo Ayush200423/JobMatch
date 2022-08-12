@@ -7,6 +7,7 @@
     <title>JobMatch</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
     <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename = 'js/app.js')}}"></script>
 </head>
 <body>
     <div class="navbar">
@@ -145,12 +146,13 @@
 
             </div>
         </div>
+        <div class="blackspace">
+            <br><br>
+        </div>
     </div>
 
-    <div class="blackspace">
-        <br><br>
-    </div>
-
-    <script src="{{ url_for('static', filename = 'js/homepage.js')}}"></script>
+    <script>
+        window.addEventListener("load", typewriterInit);
+    </script>
 </body>
 </html>
