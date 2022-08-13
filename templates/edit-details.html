@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
     <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
-    <script>
-        window.addEventListener('load', getEntsData);
-    </script>
 </head>
 <body>
     <div class="edit-details">
@@ -19,7 +16,7 @@
                 Edit Details
             </div>
 
-            <form action="#" class="edit-form raise-elements" method="post">
+            <form action="#" class="edit-form raise-elements" method="post" enctype="multipart/form-data">
                 <div class="personal-info">
                     <div class="section-title">
                         <div class="section-icon">
