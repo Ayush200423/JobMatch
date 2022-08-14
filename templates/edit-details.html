@@ -11,7 +11,7 @@
     <script>
         window.onload = function() {
             getEntsData()
-            allInputBoxes = document.querySelectorAll('.field input')
+            allInputBoxes = document.querySelectorAll('.field .input')
             for (box of allInputBoxes) {
                 box.addEventListener('change', sendUpdates)
             }
@@ -38,22 +38,22 @@
                     <div class="row">
                         <div class="field name">
                             <label class="label" for="fname">First Name</label>
-                            <input id="fname" name="fname" placeholder="First Name" required>
+                            <input class="input" id="fname" name="fname" placeholder="First Name" required>
                         </div>
 
                         <div class="field name">
                             <label class="label" for="lname">Last Name</label>
-                            <input id="lname" name="lname" placeholder="Last Name" required>
+                            <input class="input" id="lname" name="lname" placeholder="Last Name" required>
                         </div>
 
                         <div class="field email">
                             <label class="label" for="email">Email</label>
-                            <input id="email" type="email" name="email" placeholder="Email" required>
+                            <input class="input" id="email" type="email" name="email" placeholder="Email" required>
                         </div>
 
                         <div class="field phone">
                             <label class="label" for="phone">Phone Number</label>
-                            <input id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" placeholder="Phone (XXX-XXX-XXXX)" required>
+                            <input class="input" id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" placeholder="Phone (XXX-XXX-XXXX)" required>
                         </div>
                     </div>
                 </div>
@@ -69,17 +69,17 @@
                     <div class="row">
                         <div class="field education">
                             <label class="label" for="school-name">School Name</label>
-                            <input id="school" name="school-name" placeholder="School Name" required>
+                            <input class="input" id="school" name="school-name" placeholder="School Name" required>
                         </div>
 
                         <div class="field education">
                             <label class="label" for="certifications">Degrees / Certifications</label>
-                            <input id="certifications" name="certifications" placeholder="Certifications" required>
+                            <input class="input" id="certifications" name="certifications" placeholder="Certifications" required>
                         </div>
                         
                         <div class="field grad-year">
                             <label class="label" for="graduation-year">Graduation Year</label>
-                            <input id="graduation-year" type="number" name="graduation-year" placeholder="Graduation Year" required>
+                            <input class="input" id="graduation-year" type="number" name="graduation-year" placeholder="Graduation Year" required>
                         </div>
                     </div>
                 </div>
@@ -95,29 +95,102 @@
                     <div class="row">
                         <div class="field years-of-experience">
                             <label class="label" for="yearsofexp">Years of Experience</label>
-                            <input id="years-of-experience" type="number" name="yearsofexp" placeholder="Years of Experience" required>
+                            <input class="input" id="years-of-experience" type="number" name="yearsofexp" placeholder="Years of Experience" required>
                         </div>
 
                         <div class="field skills">
                             <label class="label" for="skills">Skills</label>
-                            <input id="skills" name="skills" placeholder="Skills (separate with commas)" required>
+                            <input class="input" id="skills" name="skills" placeholder="Skills" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="field work-experience">
                             <label class="label" for="company">Company</label>
-                            <input id="company" name="company" placeholder="Company Name" required>
+                            <input class="input" id="company" name="company" placeholder="Company Name" required>
                         </div>
 
                         <div class="field work-experience">
                             <label class="label" for="role">Role</label>
-                            <input id="role" name="role" placeholder="Role" required>
+                            <input class="input" id="role" name="role" placeholder="Role" required>
                         </div>
 
-                        <div class="field work-experience">
+                        <div class="field location">
                             <label class="label" for="location">Location</label>
-                            <input id="location" name="location" placeholder="Location" required>
+                            <select class="input" name="location" id="location" required>
+                                <option value="" selected>Please Select</option>
+                                <optgroup label = "Canada"></optgroup>
+                                <option value="Alberta, Canada">Alberta</option>
+                                <option value="British Columbia, Canada">British Columbia</option>
+                                <option value="Manitoba, Canada">Manitoba</option>
+                                <option value="New Brunswick, Canada">New Brunswick</option>
+                                <option value="Newfoundland and Labrador, Canada">Newfoundland and Labrador</option>
+                                <option value="Nova Scotia, Canada">Nova Scotia</option>
+                                <option value="Ontario, Canada">Ontario</option>
+                                <option value="Prince Edward Island, Canada">Prince Edward Island</option>
+                                <option value="Quebec, Canada">Quebec</option>
+                                <option value="Saskatchewan, Canada">Saskatchewan</option>
+                                <option value="Northwest Territories, Canada">Northwest Territories</option>
+                                <option value="Nunavut, Canada">Nunavut</option>
+                                <option value="Yukon, Canada">Yukon</option>
+                                <optgroup label = "USA"></optgroup>
+                                <option value="Alaska, USA">Alaska</option>
+                                <option value="Alabama, USA">Alabama</option>
+                                <option value="Arkansas, USA">Arkansas</option>
+                                <option value="American Samoa, USA">American Samoa</option>
+                                <option value="Arizona, USA">Arizona</option>
+                                <option value="California, USA">California</option>
+                                <option value="Colorada, USA">Colorada</option>
+                                <option value="Connecticut, USA">Connecticut</option>
+                                <option value="District of Colombia, USA">District of Colombia</option>
+                                <option value="Delaware, USA">Delaware</option>
+                                <option value="Florida, USA">Florida</option>
+                                <option value="Federated States, USA">Federated States</option>
+                                <option value="Georgia, USA">Georgia</option>
+                                <option value="Guam, USA">Guam</option>
+                                <option value="Hawaii, USA">Hawaii</option>
+                                <option value="Iowa, USA">Iowa</option>
+                                <option value="Idaho, USA">Idaho</option>
+                                <option value="Illinois, USA">Illinois</option>
+                                <option value="Indiana, USA">Indiana</option>
+                                <option value="Kansas, USA">Kansas</option>
+                                <option value="Kentucky, USA">Kentucky</option>
+                                <option value="Louisiana, USA">Louisiana</option>
+                                <option value="Massachusetts, USA">Massachusetts</option>
+                                <option value="Maryland, USA">Maryland</option>
+                                <option value="Maine, USA">Maine</option>
+                                <option value="Michigan, USA">Michigan</option>
+                                <option value="Minnesota, USA">Minnesota</option>
+                                <option value="Missouri, USA">Missouri</option>
+                                <option value="Mississippi, USA">Mississippi</option>
+                                <option value="Montana, USA">Montana</option>
+                                <option value="North Carolina, USA">North Carolina</option>
+                                <option value="North Dakota, USA">North Dakota</option>
+                                <option value="Nebraska, USA">Nebraska</option>
+                                <option value="New Hampshire, USA">New Hampshire</option>
+                                <option value="New Jersey, USA">New Jersey</option>
+                                <option value="New Mexico, USA">New Mexico</option>
+                                <option value="Nevada, USA">Nevada</option>
+                                <option value="New York, USA">New York</option>
+                                <option value="Ohio, USA">Ohio</option>
+                                <option value="Oklahoma, USA">Oklahoma</option>
+                                <option value="Oregon, USA">Oregon</option>
+                                <option value="Pennsylvania, USA">Pennsylvania</option>
+                                <option value="Puerto Rico, USA">Puerto Rico</option>
+                                <option value="Rhode Island, USA">Rhode Island</option>
+                                <option value="South Carolina, USA">South Carolina</option>
+                                <option value="South Dakota, USA">South Dakota</option>
+                                <option value="Tennessee, USA">Tennessee</option>
+                                <option value="Texas, USA">Texas</option>
+                                <option value="Utah, USA">Utah</option>
+                                <option value="Virgin Islands, USA">Virgin Islands</option>
+                                <option value="Vermont, USA">Vermont</option>
+                                <option value="Virginia, USA">Virginia</option>
+                                <option value="Washington, USA">Washington</option>
+                                <option value="Wisconsin, USA">Wisconsin</option>
+                                <option value="West Virginia, USA">West Virginia</option>
+                                <option value="Wyoming, USA">Wyoming</option>    
+                            </select>
                         </div>
                     </div>
                 </div>
