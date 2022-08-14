@@ -38,6 +38,5 @@ class ResumeParser:
             self.ents_dict['lname'] = self.ents_dict['name'][0].split()[1]
         except:
             self.ents_dict['fname'] = self.ents_dict['name']
-        else:
-            self.ents_dict.pop('name')
-        return self.ents_dict
+            self.ents_dict['lname'] = ''
+        return {key: ', '.join(value) if key != 'fname' and key != 'lname' and isinstance(value, list) else value for key, value in self.ents_dict.items()}
