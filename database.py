@@ -36,7 +36,6 @@ class Database:
             self.db_cursor.execute(f'SELECT * FROM {country.lower()}_jobs WHERE url = "{url}"')
             for job in self.db_cursor:
                 results = {
-                    'date added': job[0] - datetime.timedelta(days = 7),
                     'link': job[1],
                     'title': job[2],
                     'location': job[3],
