@@ -14,7 +14,7 @@ const replaceInputValues = {
 }
 
 function getEntsData() {
-    fetch('/api/fetch_ents')
+    fetch('/api/fetch-ents')
     .then((res) => res.json())
     .then((data) => {
         for (const [input_id, data_key] of Object.entries(replaceInputValues)) {
@@ -27,7 +27,7 @@ function sendUpdates(e) {
     e.preventDefault();
     const boxName = e.target.getAttribute("id");
     const boxValue = e.target.value;
-    fetch('/api/upload_resume_data', {
+    fetch('/api/upload-resume-data', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -41,4 +41,21 @@ function sendUpdates(e) {
     .catch((error) => {
         console.error('Error:', error);
     });
+}
+
+function getJobPostings() {
+    fetch('/api/fetch-relevant-postings')
+    .then((res) => res.json())
+    .then((data) => {
+        let isPosting = false;
+        for (posting_name of Object.keys(data)) {
+            isPosting = true;
+            createPosting(data[posting_name]);
+        }
+        if (isPosting == false) {
+            document.getElementById('no-jobs').style.display = 'block';
+        } else {
+            document.getElementById('submit-form').style.display = 'block';
+        }
+    })
 }
