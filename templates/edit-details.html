@@ -10,10 +10,10 @@
     <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
     <script>
         window.onload = function() {
-            getEntsData()
-            allInputBoxes = document.querySelectorAll('.field .input')
+            getEntsData();
+            allInputBoxes = document.querySelectorAll('.field .input');
             for (box of allInputBoxes) {
-                box.addEventListener('change', sendUpdates)
+                box.addEventListener('change', sendUpdates);
             }
         }
     </script>
