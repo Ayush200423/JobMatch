@@ -633,3 +633,67 @@ input[type='checkbox']:checked:after {
     background-color: #0095FF;
     color: #fff;
 }
+
+/* -------- completed.html -------- */
+
+
+.completed {
+    width: 100vw;
+    height: 100vh;
+}
+
+.completed .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.left-items .content {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: #000000;
+    border-radius: 0 20px 20px 0;
+}
+
+.content .title { 
+    font-size: 30px;
+    margin: 30px;
+}
+
+.content .description {
+    font-size: 22px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin: 30px;
+}
+
+.left-items .home-btn {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 0 0;
+}
+
+.home-btn input {
+    color: #000000;
+    border: 1px solid #0095FF;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+.home-btn input:hover {
+    color: #fff;
+    background-color: #0095FF;
+}
+
+.completed .img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
