@@ -408,7 +408,9 @@ html {
 .edit-details .edit-form {
     display: flex;
     width: 100%;
+    height: 80%;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -421,14 +423,15 @@ html {
 }
 
 .field .input {
-    height: 30px;
-    font-size: 15px;
+    height: 35px;
+    font-size: 16px;
     padding: 5px;
     outline: none;
     width: 0;
     min-width: 100%;
     border: 1px solid #00000040;
     border-radius: 5px;
+    transition: 0.5s;
 }
 
 .field input:focus {
@@ -459,7 +462,7 @@ html {
     color: #000000;
     background-color: white;
     transition: 0.3s;
-    margin: 10px 0 5px 0;
+    margin: 20px 0 5px 0;
 }
 
 .edit-form input[type="submit"]:hover {
@@ -472,29 +475,16 @@ html {
     flex-grow: 1;
 }
 
-.row .email {
-    flex-grow: 3;
-}
-
-/* -- Education Row --> */
-.row .education {
-    flex-grow: 3;
-}
-
-.row .grad-year {
-    flex-grow: 1;
-}
-
 /* -- Experience Rows --> */
-.row .years-of-experience, .row .work-experience {
-    flex-grow: 1;
+.row .education {
+    flex-grow: 2;
 }
 
 .row .skills {
     flex-grow: 10;
 }
 
-.row .location {
+.row .location, .row .role {
     flex-grow: 1;
 }
 
