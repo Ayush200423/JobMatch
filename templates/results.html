@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
+    <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'js/app.js')}}"></script>
+    <title>Job Results</title>
+    <script>
+        window.onload = function() {
+            getJobPostings(waitForChange);
+        }
+    </script>
+</head>
+<body>
+    <div class="results">
+        <div class="flex-container">
+
+            <div class="title">
+                Most Relevant Jobs For You
+            </div>
+            
+            <div class="jobs-section">
+                <div id="no-jobs">
+                    Sorry, no jobs were found.
+                </div>
+            </div>
+
+            <form method="post" id="submit-form">
+                <input type="submit" id="submit-btn">
+            </form>
+
+            <template id="posting-template">
+                <div class="posting-item raise-elements">
+                    <div class="posting-title"></div>
+    
+                    <div class="posting-details"><span class="company"></span> | <span class="location"></span></div>
+    
+                    <hr>
+                    <div>
+                        Similarity: 
+                        <span class="confidence-header"></span>
+                    </div>
+                    <hr>
+    
+                    <div class="description"></div>
+
+                    <div class="align-footer">
+                        <div class="footer">
+                            <div class="posting-link">
+                                <a target="_blank" class="external-link">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </div>
+                            <div class="select-posting">
+                                <label for="checkbox" class="select-label">Select</label>
+                                <input type="checkbox" class="select-checkbox" id="checkbox">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</body>
+</html>

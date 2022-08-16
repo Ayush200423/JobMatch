@@ -514,6 +514,12 @@ html {
     flex-wrap: wrap;
 }
 
+.results .jobs-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .results .title {
     display: flex;
     width: 100%;
@@ -522,14 +528,27 @@ html {
     font-size: 30px;
 }
 
+.results #no-jobs, .results #submit-form {
+    display: none;
+}
+
 .results .posting-item {
     flex-grow: 1;
     width: 350px;
-    height: 400px;
+    height: auto;
+    min-height: 0;
     padding: 20px;
     margin: 20px 50px;
-    border: 1px solid #0095FF;
+    border: 1px solid #000000;
     border-radius: 10px;
+    transition: 0.5s;
+}
+
+.results .posting-item:hover {
+    border: 1px solid #0095FF;
+    transform: translateY(-10px);
+    color: #0095FF;
+    background-color: #0095ff0b;
 }
 
 .posting-item .posting-title {
@@ -542,7 +561,7 @@ html {
     margin: 0 0 10px 0;
 }
 
-.posting-item .description-header {
+.posting-item .confidence-header {
     font-size: 17px;
 }
 
@@ -554,28 +573,72 @@ html {
 }
 
 .posting-item .description {
-    font-size: 17px;
-    height: 200px;
+    font-size: 15px;
+    max-height: 200px;
     overflow: scroll;
     text-overflow: ellipsis;
+    border: 1px solid #0095FF;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px 0 15px 0;
 }
 
-.posting-item .select-posting {
-    width: 100%;
+.posting-item .footer {
     display: flex;
-    justify-content: center;
-    margin: 30px 0 0 0;
+    max-height: 50px;
+    height: fit-content;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
 }
 
-.select-posting input[type='checkbox'] {
-    -webkit-appearance:none;
-    width: 25px;
-    height: 25px;
-    background: white;
-    border-radius: 5px;
-    border: 1px solid #555;
+.posting-item .external-link {
+    padding: 5px 10px 5px 10px;
+    background-color: #0095FF;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 20px;
+    transition: 0.5s;
 }
 
-.select-posting input[type='checkbox']:checked {
-    background: #0095FF;
+.posting-item .external-link:hover {
+    background-color: #0066FF;
+}
+
+.select-posting label {
+    margin: 0 5px 0 0;
+}
+
+input[type='checkbox']:after {
+    line-height: 1.5em;
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-top: -4px;
+    margin-left: -4px;
+    border: 1px solid rgb(192,192,192);
+    border-radius: 3px;
+    background: rgb(224,224,224);
+}
+
+input[type='checkbox']:checked:after {
+    width: 18px;
+    height: 18px;
+    border-color: green;
+    background-color: #0095FF;
+}
+
+.results #submit-btn {
+    margin: 10px 0 20px 0;
+    background-color: #fff;
+    color: #000000;
+    border: 1px solid #0095FF;
+    transition: 0.3s;
+}
+
+.results #submit-btn:hover {
+    background-color: #0095FF;
+    color: #fff;
 }
