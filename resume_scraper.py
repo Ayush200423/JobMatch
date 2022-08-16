@@ -8,7 +8,6 @@ class ResumeParser:
             'name': [],
             'fname': [],
             'lname': [],
-            'email address': [],
             'phone': [],
             'college name': [],
             'degree': [],
@@ -29,7 +28,7 @@ class ResumeParser:
         doc = self.nlp(self.text)
         for ent in doc.ents:
             label = ent.label_
-            if str(ent) in self.ents_dict[label.lower()]:
+            if str(ent) in self.ents_dict[label.lower()] or label == 'email address':
                 continue
             else:
                 self.ents_dict[label.lower()].append(str(ent))
