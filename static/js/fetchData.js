@@ -1,14 +1,9 @@
 const replaceInputValues = {
     'fname': 'fname',
     'lname': 'lname',
-    'email': 'email address',
     'phone': 'phone',
-    'school': 'college name',
     'certifications': 'degree',
-    'graduation-year': 'graduation year',
-    'years-of-experience': 'years of experience',
     'skills': 'skills',
-    'company': 'company',
     'role': 'role',
     'location': 'location'
 }
@@ -23,7 +18,7 @@ function getEntsData() {
     });
 }
 
-function sendUpdates(e) {
+function sendResumeUpdates(e) {
     e.preventDefault();
     const boxName = e.target.getAttribute("id");
     const boxValue = e.target.value;
@@ -36,14 +31,14 @@ function sendUpdates(e) {
     })
     .then((response) => response.json())
     .then((data) => {
-    console.log('Success:', data);
+        console.log('Success:', data);
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 }
 
-function getJobPostings() {
+function getJobPostings(callback) {
     fetch('/api/fetch-relevant-postings')
     .then((res) => res.json())
     .then((data) => {
@@ -56,6 +51,30 @@ function getJobPostings() {
             document.getElementById('no-jobs').style.display = 'block';
         } else {
             document.getElementById('submit-form').style.display = 'block';
+            callback();
         }
+        return
+    })
+}
+
+function sendCheckboxState(e) {
+    const checkboxLink = e.target.getAttribute('id');
+    let state = "remove"
+    if (e.target.checked) {
+        state = "append"
+    }
+    fetch('/api/upload-checkbox-state', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({[state]:checkboxLink}),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('Success:', data)
+    })
+    .catch((error) => {
+        console.error('Error:', error)
     })
 }
