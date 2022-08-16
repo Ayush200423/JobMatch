@@ -24,7 +24,7 @@
             <div class="title">
                 Edit Details
             </div>
-
+            <p>This information will automatically be filled into job applications for you.</p>
             <form action="#" class="edit-form raise-elements" method="post" enctype="multipart/form-data">
                 <div class="personal-info">
                     <div class="section-title">
@@ -46,40 +46,9 @@
                             <input class="input" id="lname" name="lname" placeholder="Last Name" required>
                         </div>
 
-                        <div class="field email">
-                            <label class="label" for="email">Email</label>
-                            <input class="input" id="email" type="email" name="email" placeholder="Email" required>
-                        </div>
-
                         <div class="field phone">
                             <label class="label" for="phone">Phone Number</label>
                             <input class="input" id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" placeholder="Phone (XXX-XXX-XXXX)" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="education-info">
-                    <div class="section-title">
-                        <div class="section-icon">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                        </div>
-                        Education
-                    </div>
-                    <hr>
-                    <br>
-                    <div class="row">
-                        <div class="field education">
-                            <label class="label" for="school-name">School Name</label>
-                            <input class="input" id="school" name="school-name" placeholder="School Name" required>
-                        </div>
-
-                        <div class="field education">
-                            <label class="label" for="certifications">Degrees / Certifications</label>
-                            <input class="input" id="certifications" name="certifications" placeholder="Certifications" required>
-                        </div>
-                        
-                        <div class="field grad-year">
-                            <label class="label" for="graduation-year">Graduation Year</label>
-                            <input class="input" id="graduation-year" type="number" name="graduation-year" placeholder="Graduation Year" required>
                         </div>
                     </div>
                 </div>
@@ -88,14 +57,14 @@
                         <div class="section-icon">
                             <i class="fa-solid fa-briefcase"></i>
                         </div>
-                        Work Experience
+                        Experience
                     </div>
                     <hr>
                     <br>
                     <div class="row">
-                        <div class="field years-of-experience">
-                            <label class="label" for="yearsofexp">Years of Experience</label>
-                            <input class="input" id="years-of-experience" type="number" name="yearsofexp" placeholder="Years of Experience" required>
+                        <div class="field education">
+                            <label class="label" for="certifications">Degrees / Certifications</label>
+                            <input class="input" id="certifications" name="certifications" placeholder="Certifications" required>
                         </div>
 
                         <div class="field skills">
@@ -105,12 +74,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="field work-experience">
-                            <label class="label" for="company">Company</label>
-                            <input class="input" id="company" name="company" placeholder="Company Name" required>
-                        </div>
-
-                        <div class="field work-experience">
+                        <div class="field role">
                             <label class="label" for="role">Role</label>
                             <input class="input" id="role" name="role" placeholder="Role" required>
                         </div>
