@@ -10,12 +10,13 @@ class Similarity:
         self.role = role.split()
         self.region = location_separate[0]
         self.country = location_separate[1]
-        self.resume_data = ' '.join(resume_data)
+        self.resume_data = resume_data
         self.nlp = spacy.load('en_core_web_md', exclude = ["tagger", "parser", "senter", "attribute_ruler", "lemmatizer", "ner"])
         self.stop_words = set(stopwords.words('english'))
         self.resume_doc = self.nlp_resume_doc()
         self.db = Database()
         self.db_search_results = set()
+        self.similarity_threshold = 0.85
         self.jobs = []
 
     def nlp_resume_doc(self):
@@ -31,12 +32,11 @@ class Similarity:
             for url in self.db_search_results:
                 posting = self.db.get_job(country = self.country, url = url)
                 similarity = self.get_similarity(posting['description'])
-                if similarity > 0.65:
+                if similarity > self.similarity_threshold:
                     self.jobs.append([posting, similarity])
         if len(self.jobs) < 5 and self.region != '':
             self.region = ''
             self.jobs = []
-            print('Not enough postings found... Looking for more')
             self.get_jobs()
         return self.jobs
 
