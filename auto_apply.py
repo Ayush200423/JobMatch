@@ -8,23 +8,14 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 class AutoApply:
-    def __init__(self, email, password, firstname, surname, phone, resume_path, jobtitle, location):
-        self.firstname = firstname
-        self.surname = surname
-        self.email = email
-        self.phone = phone
-        self.resume_path = resume_path
-        self.jobtitle = jobtitle
-        self.location = location
-        self.password = password
+    def __init__(self):
         self.q_num = 4
         self.options = Options()
-        self.options.headless = True
+        self.options.headless = False
     
-    def open_url_iframe(self, url, refresh_page = True):
+    def open_url_iframe(self, url):
         self.driver = self.create_driver()
         self.url = url
-        self.refresh_page = refresh_page
         self.driver.get(self.url)
         try:
             self.click_button(elem = 'button', text_value = 'Apply Now')
@@ -32,73 +23,105 @@ class AutoApply:
             time.sleep(0.1)
             self.driver.switch_to.frame(iframe)
         except:
-            self.refresh()
+            self.close_driver()
+            raise Exception('Error opening iFrame')
 
-    def fill_personal_info(self):
+    def login(self):
+        try:
+            self.click_button(elem = 'a', text_value = 'Sign in')
+            self.complete_auth_form(action = 'Sign in')
+        except:
+            return
+
+    def fill_info(self, user_info, resume_path):
+        self.email = user_info['email']
+        self.password = user_info['password']
+        self.fname = user_info['fname']
+        self.lname = user_info['lname']
+        self.phone = user_info['phone']
+        self.resume = resume_path
+        self.jobtitle = user_info['jobtitle']
+        self.location = user_info['location']
+        self.input_count = 0
+
         self.login()
         try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//input[@name='q0']")))
+            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='container']")))
         except:
-            raise Exception('Error locating elements')
-        general_text_to_fill = [['q0', self.firstname], ['q1', self.surname], ['q2', self.email], ['q30', self.phone]]
-        for value, input in general_text_to_fill:
-            try:
-                input_box = self.driver.find_element(by = "xpath", value=f"//input[@name='{value}']")
-                if input_box.get_attribute("value") == "":
-                    input_box.send_keys(input)
+            self.click_button(elem='button', text_value='Continue')
+        else:
+            while True:
+                labels = [["First name", self.fname], ["Surname", self.lname], ["Email", self.email]]
+                for label_text, input_value in labels:
+                    try:
+                        input_id = self.driver.find_element(by="xpath", value=f"//label[contains(text(), '{label_text}')]").get_attribute('for')
+                        input_box = self.driver.find_element(by="xpath", value=f"//input[@id='{input_id}']")
+                        self.submit_value(input_box, input_value)
+                    except:
+                        continue
+                    time.sleep(0.1)
+
+                for fn in (self.fill_phone, self.fill_experience, self.fill_resume):
+                    try:
+                        fn()
+                    except:
+                        continue
+                    
+                try:
+                    self.click_button(elem='button', text_value='Continue')
+                except:
+                    try:
+                        self.click_button(elem='button', text_value='Send')
+                    except:
+                        if self.input_count == 6:
+                            self.close_driver()
+                            raise Exception('Error: Extra Steps Involved')
+                    else:
+                        return
                 else:
                     continue
-            except:
-                self.q_num -= 1
-            time.sleep(0.1)
+        
+    def fill_phone(self):
+        phone_box = self.driver.find_element(by="xpath", value=f"//input[@type='tel']")
+        return self.submit_value(phone_box, self.phone)
+
+    def fill_experience(self):
+        jobtitle_box = self.driver.find_element(by="xpath", value=f"//input[@placeholder='Your job title or qualification']")
+        self.submit_value(jobtitle_box, self.jobtitle)
+        location_box = self.driver.find_element(by="xpath", value=f"//input[@placeholder='Your location']")
+        return self.submit_value(location_box, self.location)
+    
+    def fill_resume(self):
+        resume_box = self.driver.find_element(by="xpath", value=f"//input[@type='file']")
+        try:
+            self.driver.find_element(by="xpath", value=f"//label[@class='file-upload-s file-upload complete']")
+        except:
+            resume_box.send_keys(self.resume)
+            self.input_count += 1
         return
 
-    def fill_work(self):
-        try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, f"//input[@name='q{self.q_num}']")))
-        except:
-            raise Exception('Error locating elements')
-        resume_information = [[f'q{self.q_num}', self.resume_path], [f'q{self.q_num}-occupation', self.jobtitle], [f'q{self.q_num}-location', self.location]]
-        for value, input in resume_information:
-            try:
-                input_box = self.driver.find_element(by = "xpath", value = f"//input[@name='{value}']")
-                if input_box.get_attribute("value") == "":
-                    input_box.send_keys(input)
-                time.sleep(0.1)
-            except:
-                if self.q_num != 5:
-                    self.q_num = 5
-                    self.click_button(elem = 'button', text_value = 'Continue')
-                    self.fill_work()
-                else:
-                    raise Exception('Error filling in resume details')
-        else:
-            self.click_button(elem = 'button', text_value = 'Continue')
-            self.click_button(elem = 'button', text_value = 'Send')
+    def submit_value(self, input_box, value):
+        if input_box.get_attribute('value') == '':
+            input_box.send_keys(value)
+            self.input_count += 1
+        return
 
     def click_button(self, elem, text_value):
-        try:
-            WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, f"//{elem}[contains(text(), '{text_value}')]")))
-        except:
-            raise Exception('Error locating specified button')
-        else:
-            if text_value == 'Create an account':
-                time.sleep(1)
-        buttons = self.driver.find_elements(by="xpath", value=f"//{elem}[contains(text(), '{text_value}')]")
-        for button in buttons:
+        if text_value == 'Create an account':
+            time.sleep(1)
+        self.driver.find_element(by="xpath", value=f"//{elem}[contains(text(), '{text_value}')]").click()
+        if text_value == 'Send':
             try:
-                button.click()
-                if text_value == 'Send':
-                    try:
-                        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success alert-flat']")))
-                    except:
-                        raise Exception('Error submitting application')
-                    else:
-                        self.close_driver()
+                WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success alert-flat']")))
             except:
-                continue
+                raise Exception('Error submitting application')
+            else:
+                time.sleep(1)
+                return self.close_driver()
 
-    def register(self):
+    def register(self, email, password):
+        self.email = email
+        self.password = password
         self.driver = self.create_driver()
         register_url = 'https://www.careerjet.com/register'
         self.driver.get(register_url)
@@ -115,13 +138,6 @@ class AutoApply:
                 return 'Successfully Created a New Account'
             return 'Account already exists'
 
-    def login(self):
-        try:
-            self.click_button(elem = 'a', text_value = 'Sign in')
-            self.complete_auth_form(action = 'Sign in')
-        except:
-            return
-
     def complete_auth_form(self, action):
         email_field = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.ID, 'email')))
         email_field.clear()
@@ -132,24 +148,8 @@ class AutoApply:
         password_field.send_keys(self.password)
         self.click_button(elem = 'button', text_value = action)
 
-    def refresh(self):
-        if self.refresh_page == True:
-            self.driver.refresh()
-        else:
-            raise Exception("Error refreshing page")
-
     def create_driver(self):
         return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = self.options)
     
     def close_driver(self):
         return self.driver.close()
-
-    def apply(self, url):
-        try:
-            self.open_url_iframe(url = url)
-            self.fill_personal_info()
-            self.fill_work()
-        except:
-            return 'Error'
-        else:
-            return f'Successfully Applied to: {url}'
