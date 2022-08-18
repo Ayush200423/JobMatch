@@ -1,4 +1,3 @@
-import email
 from flask import Flask, redirect, url_for, render_template, request, session
 import requests
 import tempfile
@@ -17,13 +16,15 @@ def named_temp_file(url = None, **user_info):
     resume_url = resume_storage.get_resume_url(filename = session['filename'])
     get_resume = requests.get(resume_url)
     if url:
-        auto_apply.open_url_iframe(url=url)
-        auto_apply.fill_personal_info(user_info['email'], user_info['password'], user_info['fname'], user_info['lname'], user_info['phone'], user_info['jobtitle'], user_info['location'])
-        with tempfile.NamedTemporaryFile(dir='./active_files', suffix='.pdf') as tmp_file:
-            tmp_file.write(get_resume.content)
-            tmp_file_path = tmp_file.name
-            auto_apply.fill_work(tmp_file_path)
+        try:
+            auto_apply.open_url_iframe(url=url)
+            with tempfile.NamedTemporaryFile(dir='./active_files', suffix='.pdf') as tmp_file:
+                tmp_file.write(get_resume.content)
+                tmp_file_path = tmp_file.name
+                auto_apply.fill_info(user_info=user_info, resume_path=tmp_file_path)
             return
+        except Exception as err:
+            return err
     else:
         with tempfile.NamedTemporaryFile(dir='./active_files', suffix='.pdf') as tmp_file:
             tmp_file.write(get_resume.content)
@@ -41,14 +42,12 @@ def home():
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password']
+        auto_apply.register(email=email, password=password)
         session['email'] = email
         session['password'] = password
         return redirect(url_for("upload"))
     else:
-        if "email" in session and "password" in session:
-            return redirect(url_for("upload"))
-        else:
-            return render_template('home.html')
+        return render_template('home.html')
 
 @app.route("/upload/", methods=["GET", "POST"])
 def upload():
@@ -87,12 +86,31 @@ def results():
         jobtitle = session['role']
         location = session['location']
         for url in session['selected links']:
-            named_temp_file(url=url, email=email, password=password, fname=fname, lname=lname, phone=phone, jobtitle=jobtitle, location=location)
+            result = named_temp_file(url=url, email=email, password=password, fname=fname, lname=lname, phone=phone, jobtitle=jobtitle, location=location)
+            if 'Unable to Login' in str(result):
+                break
+        return redirect(url_for('submit'))
     else:
         if "skills" in session:
             return render_template("results.html")
         else:
-            return redirect(url_for("edit-details"))
+            return redirect(url_for("edit"))
+
+@app.route("/submit/", methods=["GET", "POST"])
+def submit():
+    if request.method == "POST":
+        return redirect(url_for("logout"))
+    else:
+        if 'selected links' in session:
+            session.pop('selected links')
+            return render_template('submitted.html')
+        else:
+            return redirect(url_for('results'))
+
+@app.route("/logout/")
+def logout():
+    [session.pop(key) for key in list(session.keys())]
+    return redirect(url_for("home"))
 
 # <--- /api/ --->
 
@@ -110,7 +128,7 @@ def upload_resume_data():
 @app.route("/api/fetch-relevant-postings", methods=["GET"])
 def fetch_relevant_postings():
     all_jobs = {}
-    job_sim = Similarity(role = session['role'], location = session['location'], resume_data = f"{session['skills']} {session['role']}")
+    job_sim = Similarity(role = session['role'], location = session['location'], resume_data = f"{session['skills']} {session['role']} {session['certifications']}")
     jobs = job_sim.get_jobs()
     for job_index in range(len(jobs)):
         posting, confidence = jobs[job_index]
@@ -125,20 +143,16 @@ def upload_checkbox_state():
         selected_links = session['selected links']
     except:
         selected_links = []
-    for state, link in res.items():
+    print(res)
+    for state, links in res.items():
         if state == 'append':
-            selected_links.append(link)
+            for link in links:
+                selected_links.append(link)
         else:
-            selected_links.remove(link)
+            for link in links:
+                selected_links.remove(link)
     session['selected links'] = selected_links
     return res
-
-# <--- /logout/ --->
-
-@app.route("/logout/")
-def logout():
-    [session.pop(key) for key in list(session.keys())]
-    return redirect(url_for("home"))
 
 if __name__ == '__main__':
     resume_storage = StorageManager()
