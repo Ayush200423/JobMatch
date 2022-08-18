@@ -10,59 +10,72 @@
     <script src="{{ url_for('static', filename = 'js/app.js')}}"></script>
     <title>Job Results</title>
     <script>
-        window.onload = function() {
+        window.addEventListener("load", () => {
             getJobPostings(waitForChange);
-        }
+        })
     </script>
 </head>
 <body>
     <div class="results">
-        <div class="flex-container">
 
-            <div class="title">
-                Most Relevant Jobs For You
-            </div>
-            
-            <div class="jobs-section">
-                <div id="no-jobs">
-                    Sorry, no jobs were found.
+        <div id="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div id="results-contents">
+            <div class="flex-container">
+                <div class="title">
+                    Most Relevant Jobs For You
                 </div>
-            </div>
-
-            <form method="post" id="submit-form">
-                <input type="submit" id="submit-btn">
-            </form>
-
-            <template id="posting-template">
-                <div class="posting-item raise-elements">
-                    <div class="posting-title"></div>
     
-                    <div class="posting-details"><span class="company"></span> | <span class="location"></span></div>
+                <div class="select-posting" id="select-all-postings">
+                    <label for="select-all" class="raise-elements" id="select-label">Select All</label>
+                    <input type="checkbox" class="raise-elements" id="select-all">
+                </div>
     
-                    <hr>
-                    <div>
-                        Similarity: 
-                        <span class="confidence-header"></span>
+                <div class="jobs-section">
+                    <div id="no-jobs">
+                        Sorry, no jobs were found.
                     </div>
-                    <hr>
+                </div>
     
-                    <div class="description"></div>
-
-                    <div class="align-footer">
-                        <div class="footer">
-                            <div class="posting-link">
-                                <a target="_blank" class="external-link">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                </a>
-                            </div>
-                            <div class="select-posting">
-                                <label for="checkbox" class="select-label">Select</label>
-                                <input type="checkbox" class="select-checkbox" id="checkbox">
+                <form method="post" id="submit-form">
+                    <input type="submit" id="submit-btn">
+                </form>
+    
+                <template id="posting-template">
+                    <div class="posting-item raise-elements">
+                        <div class="posting-title"></div>
+        
+                        <div class="posting-details"><span class="company"></span> | <span class="location"></span></div>
+        
+                        <hr>
+                        <div>
+                            Similarity: 
+                            <span class="confidence-header"></span>
+                        </div>
+                        <hr>
+        
+                        <div class="description"></div>
+    
+                        <div class="align-footer">
+                            <div class="footer">
+                                <div class="posting-link">
+                                    <a target="_blank" class="external-link">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </a>
+                                </div>
+                                <div class="select-posting">
+                                    <label for="checkbox" class="select-label">Select</label>
+                                    <input type="checkbox" class="select-checkbox" id="checkbox">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
     </div>
 </body>

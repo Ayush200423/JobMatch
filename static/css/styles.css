@@ -28,6 +28,23 @@ html {
     to {font-size: 17px; padding: 10px; border-radius: 10px; margin: 0 0 20px 0; background-color: #0095FF; color: #fff;}
 }
 
+@keyframes bounceLoader {
+    from {
+        width: 1rem;
+        height: 1rem;
+        opacity: 1;
+        transform: translate3d(0);
+        background-color: #0095FF;
+    }
+    to {
+        width: 1rem;
+        height: 1rem;
+        opacity: 0.3;
+        transform: translate3d(0, -1rem, 0);
+        background-color: #0066FF;
+    }
+}
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -495,6 +512,10 @@ html {
     height: 100vh;
 }
 
+.results #results-contents {
+    display: none;
+}
+
 .results .flex-container {
     display: flex;
     width: 100%;
@@ -518,7 +539,7 @@ html {
     font-size: 30px;
 }
 
-.results #no-jobs, .results #submit-form {
+.results #no-jobs, .results #submit-form, .results #select-label, .results #select-all {
     display: none;
 }
 
@@ -598,7 +619,7 @@ html {
 }
 
 .select-posting label {
-    margin: 0 5px 0 0;
+    margin: 0 10px 0 0;
 }
 
 input[type='checkbox']:after {
@@ -621,6 +642,18 @@ input[type='checkbox']:checked:after {
     background-color: #0095FF;
 }
 
+.results #select-all-postings {
+    display: flex;
+    width: 100vw;
+    justify-content: end;
+    align-items: center;
+    padding-right: 60px;
+}
+
+#select-all-postings input {
+    padding-left: 20px;
+}
+
 .results #submit-btn {
     margin: 10px 0 20px 0;
     background-color: #fff;
@@ -635,7 +668,6 @@ input[type='checkbox']:checked:after {
 }
 
 /* -------- completed.html -------- */
-
 
 .completed {
     width: 100vw;
@@ -696,4 +728,29 @@ input[type='checkbox']:checked:after {
     align-items: center;
     width: 100%;
     height: 100%;
+}
+
+/* --- loader styles --- */
+
+#loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #000000;
+}
+
+#loader > span {
+    border-radius: 50%;
+    margin: 5rem 0.5rem;
+    animation: bounceLoader 0.6s infinite alternate;
+}
+  
+#loader > span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+  
+#loader > span:nth-child(3) {
+    animation-delay: 0.4s;
 }
