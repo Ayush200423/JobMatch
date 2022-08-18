@@ -20,11 +20,10 @@ class AutoApply:
         try:
             self.click_button(elem = 'button', text_value = 'Apply Now')
             iframe = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//iframe[@id='apply']")))
-            time.sleep(0.1)
             self.driver.switch_to.frame(iframe)
         except:
             self.close_driver()
-            raise Exception('Error opening iFrame')
+            raise Exception('Error: Opening iFrame')
 
     def login(self):
         try:
@@ -43,23 +42,26 @@ class AutoApply:
         self.jobtitle = user_info['jobtitle']
         self.location = user_info['location']
         self.input_count = 0
+        self.iter_count = 0
 
         self.login()
         try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='container']")))
+            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//a[@href='/apply2/logout']")))
         except:
-            self.click_button(elem='button', text_value='Continue')
+            self.close_driver()
+            raise Exception('Error: Unable to Login')
         else:
             while True:
                 labels = [["First name", self.fname], ["Surname", self.lname], ["Email", self.email]]
+                self.iter_count += 1
                 for label_text, input_value in labels:
                     try:
                         input_id = self.driver.find_element(by="xpath", value=f"//label[contains(text(), '{label_text}')]").get_attribute('for')
                         input_box = self.driver.find_element(by="xpath", value=f"//input[@id='{input_id}']")
                         self.submit_value(input_box, input_value)
                     except:
+                        time.sleep(0.1)
                         continue
-                    time.sleep(0.1)
 
                 for fn in (self.fill_phone, self.fill_experience, self.fill_resume):
                     try:
@@ -71,9 +73,10 @@ class AutoApply:
                     self.click_button(elem='button', text_value='Continue')
                 except:
                     try:
-                        self.click_button(elem='button', text_value='Send')
+                        self.click_button(elem='button', text_value='Send') 
                     except:
-                        if self.input_count == 6:
+                        if self.iter_count >= 5:
+                            time.sleep(2)
                             self.close_driver()
                             raise Exception('Error: Extra Steps Involved')
                     else:
@@ -83,13 +86,13 @@ class AutoApply:
         
     def fill_phone(self):
         phone_box = self.driver.find_element(by="xpath", value=f"//input[@type='tel']")
-        return self.submit_value(phone_box, self.phone)
+        self.submit_value(phone_box, self.phone)
 
     def fill_experience(self):
         jobtitle_box = self.driver.find_element(by="xpath", value=f"//input[@placeholder='Your job title or qualification']")
         self.submit_value(jobtitle_box, self.jobtitle)
         location_box = self.driver.find_element(by="xpath", value=f"//input[@placeholder='Your location']")
-        return self.submit_value(location_box, self.location)
+        self.submit_value(location_box, self.location)
     
     def fill_resume(self):
         resume_box = self.driver.find_element(by="xpath", value=f"//input[@type='file']")
@@ -97,8 +100,6 @@ class AutoApply:
             self.driver.find_element(by="xpath", value=f"//label[@class='file-upload-s file-upload complete']")
         except:
             resume_box.send_keys(self.resume)
-            self.input_count += 1
-        return
 
     def submit_value(self, input_box, value):
         if input_box.get_attribute('value') == '':
@@ -109,12 +110,18 @@ class AutoApply:
     def click_button(self, elem, text_value):
         if text_value == 'Create an account':
             time.sleep(1)
-        self.driver.find_element(by="xpath", value=f"//{elem}[contains(text(), '{text_value}')]").click()
+        try:
+            button = WebDriverWait(self.driver, 1).until(EC.element_to_be_clickable((By.XPATH, f"//{elem}[contains(text(), '{text_value}')]")))
+            button.click()
+        except:
+            self.close_driver()
+            raise Exception('Error: Button not Found')
         if text_value == 'Send':
             try:
                 WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success alert-flat']")))
             except:
-                raise Exception('Error submitting application')
+                self.close_driver()
+                raise Exception('Error: Unable to Submit Application')
             else:
                 time.sleep(1)
                 return self.close_driver()
