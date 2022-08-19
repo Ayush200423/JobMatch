@@ -40,11 +40,8 @@ def named_temp_file(url = None, **user_info):
 @app.route("/home/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        email = request.form['email']
-        password = request.form['password']
-        auto_apply.register(email=email, password=password)
-        session['email'] = email
-        session['password'] = password
+        session['email'] = request.form['email']
+        session['password'] = request.form['password']
         return redirect(url_for("upload"))
     else:
         return render_template('home.html')
@@ -78,17 +75,6 @@ def edit():
 @app.route("/results/", methods=["GET", "POST"])
 def results():
     if request.method == "POST":
-        email = session['email']
-        password = session['password']
-        fname = session['fname']
-        lname = session['lname']
-        phone = session['phone']
-        jobtitle = session['role']
-        location = session['location']
-        for url in session['selected links']:
-            result = named_temp_file(url=url, email=email, password=password, fname=fname, lname=lname, phone=phone, jobtitle=jobtitle, location=location)
-            if 'Unable to Login' in str(result):
-                break
         return redirect(url_for('submit'))
     else:
         if "skills" in session:
@@ -102,7 +88,6 @@ def submit():
         return redirect(url_for("logout"))
     else:
         if 'selected links' in session:
-            session.pop('selected links')
             return render_template('submitted.html')
         else:
             return redirect(url_for('results'))
@@ -143,7 +128,6 @@ def upload_checkbox_state():
         selected_links = session['selected links']
     except:
         selected_links = []
-    print(res)
     for state, links in res.items():
         if state == 'append':
             for link in links:
@@ -153,6 +137,28 @@ def upload_checkbox_state():
                 selected_links.remove(link)
     session['selected links'] = selected_links
     return res
+
+@app.route("/api/get-auto-app-results", methods=["GET"])
+def get_auto_app_results():
+    email = session['email']
+    password = session['password']
+    fname = session['fname']
+    lname = session['lname']
+    phone = session['phone']
+    jobtitle = session['role']
+    location = session['location']
+    successful_count = 0
+    error_count = 0
+
+    auto_apply.register(email=email, password=password)
+    for url in session['selected links']:
+        result = named_temp_file(url=url, email=email, password=password, fname=fname, lname=lname, phone=phone, jobtitle=jobtitle, location=location)
+        if not isinstance(result, Exception):
+            successful_count += 1
+        else:
+            error_count += 1
+    session.pop('selected links')
+    return json.dumps({'successful': successful_count, 'errors': error_count})
 
 if __name__ == '__main__':
     resume_storage = StorageManager()
