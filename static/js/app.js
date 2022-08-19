@@ -43,10 +43,15 @@ function typewriterInit() {
   new TypeWriter(spanElement, sentences, wait = 1500);
 }
 
-function showFileName(event) {
+function removeLoader() {
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('results-contents').style.display = 'block';
+}
+
+function showFileName(e) {
   const textbox = document.querySelector('.file-name-textbox');
   let fileInfoArea = document.querySelectorAll('.uploaded-file-name')
-  const input = event.srcElement;
+  const input = e.srcElement;
   const fileName = input.files[0].name;
 
   if (fileInfoArea.length == 0) {
@@ -76,8 +81,22 @@ function createPosting(posting) {
 }
 
 function waitForChange() {
-  allPostings = document.querySelectorAll('.select-checkbox');
+  const allPostings = document.querySelectorAll('.select-checkbox');
   for (posting of allPostings) {
-    posting.addEventListener('change', sendCheckboxState);
+    posting.addEventListener('change', sendCheckboxState);  // sendCheckboxState() function located inside fetchData.js
   }
+
+  const selectAllBox = document.querySelector('#select-all');
+  selectAllBox.addEventListener('click', (e) => {
+    if (selectAllBox.checked) {
+      for (posting of allPostings) {
+        posting.checked = true
+      }
+    } else {
+      for (posting of allPostings) {
+        posting.checked = false
+      }
+    }
+    sendCheckboxState(e)
+  })
 }

@@ -47,10 +47,13 @@ function getJobPostings(callback) {
             isPosting = true;
             createPosting(data[posting_name]);
         }
+        removeLoader();
         if (isPosting == false) {
             document.getElementById('no-jobs').style.display = 'block';
         } else {
             document.getElementById('submit-form').style.display = 'block';
+            document.getElementById('select-label').style.display = 'block';
+            document.getElementById('select-all').style.display = 'block';
             callback();
         }
         return
@@ -58,7 +61,13 @@ function getJobPostings(callback) {
 }
 
 function sendCheckboxState(e) {
-    const checkboxLink = e.target.getAttribute('id');
+    let checkboxLink;
+    if (e.target.getAttribute('id') != "select-all") {
+        checkboxLink = [e.target.getAttribute('id')];
+    } else {
+        checkboxLink = Array.prototype.map.call(document.querySelectorAll('.select-checkbox'), el => el.getAttribute('id'));
+    }
+    
     let state = "remove"
     if (e.target.checked) {
         state = "append"
@@ -76,5 +85,14 @@ function sendCheckboxState(e) {
     })
     .catch((error) => {
         console.error('Error:', error)
+    })
+}
+
+function getAppsResults() {
+    fetch("/api/get-auto-app-results")
+    .then((res) => res.json())
+    .then((data) => {
+        document.querySelector('#successful-apps').textContent = data['successful']
+        document.querySelector('#error-apps').textContent = data['errors']
     })
 }

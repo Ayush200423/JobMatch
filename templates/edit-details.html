@@ -9,13 +9,13 @@
     <script src="https://kit.fontawesome.com/fde6b1f1eb.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
     <script>
-        window.onload = function() {
+        window.addEventListener("load", () => {
             getEntsData();
             allInputBoxes = document.querySelectorAll('.field .input');
             for (box of allInputBoxes) {
                 box.addEventListener('change', sendResumeUpdates);
             }
-        }
+        });
     </script>
 </head>
 <body>

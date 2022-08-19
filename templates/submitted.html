@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You've Applied!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/styles.css')}}">
+    <script src="{{ url_for('static', filename = 'js/fetchData.js')}}"></script>
+    <script>
+        window.addEventListener('load', () => {
+            getAppsResults();
+        });
+    </script>
 </head>
 <body>
     <div class="completed">
-        <div class="container">
+        <div class="submitted-container">
             <div class="left-items">
                 <div class="content">
                     <div class="title">
@@ -18,6 +24,16 @@
                     <hr>
                     <div class="description">
                         Check your email for job application confirmations.
+                        <div class="results-container">
+                            <div class="successful">
+                                <u>Successful</u>
+                                <p id="successful-apps">...</p>
+                            </div>
+                            <div class="error">
+                                <u>Error</u>
+                                <p id="error-apps">...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="home-btn">
