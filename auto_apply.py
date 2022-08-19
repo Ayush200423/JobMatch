@@ -69,20 +69,19 @@ class AutoApply:
                     except:
                         continue
                     
-                try:
-                    self.click_button(elem='button', text_value='Continue')
-                except:
+                for text_value in ('Continue', 'Send'):
                     try:
-                        self.click_button(elem='button', text_value='Send') 
+                        self.click_button(elem='button', text_value=text_value)
                     except:
-                        if self.iter_count >= 5:
-                            time.sleep(2)
+                        if self.iter_count >= 6:
                             self.close_driver()
                             raise Exception('Error: Extra Steps Involved')
+                        continue
                     else:
-                        return
-                else:
-                    continue
+                        if text_value == 'Send':
+                            return
+                        else:
+                            continue
         
     def fill_phone(self):
         phone_box = self.driver.find_element(by="xpath", value=f"//input[@type='tel']")
@@ -114,7 +113,6 @@ class AutoApply:
             button = WebDriverWait(self.driver, 1).until(EC.element_to_be_clickable((By.XPATH, f"//{elem}[contains(text(), '{text_value}')]")))
             button.click()
         except:
-            self.close_driver()
             raise Exception('Error: Button not Found')
         if text_value == 'Send':
             try:
