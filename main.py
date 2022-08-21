@@ -17,7 +17,8 @@ def named_temp_file(url = None, **user_info):
     get_resume = requests.get(resume_url)
     if url:
         try:
-            auto_apply.open_url_iframe(url=url)
+            auto_apply.get_url(url=url)
+            auto_apply.open_url_iframe()
             with tempfile.NamedTemporaryFile(dir='./active_files', suffix='.pdf') as tmp_file:
                 tmp_file.write(get_resume.content)
                 tmp_file_path = tmp_file.name
