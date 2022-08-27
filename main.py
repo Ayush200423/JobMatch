@@ -1,49 +1,39 @@
 from flask import Flask, redirect, url_for, render_template, request, session
-import requests
-import tempfile
 import json
+from mail import Mailer
 
 from secret_key import key
 from storage import StorageManager
+from database.users_database import UsersDatabase
 from resume_scraper import ResumeParser
 from job_similarity import Similarity
-from auto_apply import AutoApply
+from mail import Mailer
 
 app = Flask(__name__)
 app.secret_key = key
-
-def named_temp_file(url = None, **user_info):
-    resume_url = resume_storage.get_resume_url(filename = session['filename'])
-    get_resume = requests.get(resume_url)
-    if url:
-        try:
-            auto_apply.get_url(url=url)
-            auto_apply.open_url_iframe()
-            with tempfile.NamedTemporaryFile(dir='./active_files', suffix='.pdf') as tmp_file:
-                tmp_file.write(get_resume.content)
-                tmp_file_path = tmp_file.name
-                auto_apply.fill_info(user_info=user_info, resume_path=tmp_file_path)
-            return
-        except Exception as err:
-            return err
-    else:
-        with tempfile.NamedTemporaryFile(dir='./active_files', suffix='.pdf') as tmp_file:
-            tmp_file.write(get_resume.content)
-            tmp_file_path = tmp_file.name
-            resume_parser.pdf_to_txt(tmp_file_path)
-            ents_dict = resume_parser.find_ents()
-        for label, ents in ents_dict.items():
-            if ents_dict[label] != '':
-                session[label.lower()] = ents
-        return ents_dict
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        session['email'] = request.form['email']
-        session['password'] = request.form['password']
-        return redirect(url_for("upload"))
+        email = request.form['email']
+        password = request.form['password']
+        try:
+            if users_db.read_user(email=email, password=password, auth=True):
+                session['email'] = email
+                return redirect(url_for('upload'))
+            else:
+                return render_template('home.html')
+        except:
+            try:
+                users_db.create_user(email=email, password=password)
+            except:
+                return render_template('home.html')
+            else:
+                mailer.setup_email(user_email = email)
+                mailer.send_email()
+                session['email'] = email
+                return redirect(url_for("upload"))
     else:
         return render_template('home.html')
 
@@ -51,6 +41,9 @@ def home():
 def upload():
     if request.method == "POST":
         resume = request.files['resume-file']
+        resume_parser.pdf_to_txt(resume)
+        ents_dict = resume_parser.find_ents()
+        users_db.update_user(email=session['email'], ents_dict=ents_dict)
         if resume.filename != '':
             session['filename'] = resume.filename
             resume_storage.insert_resume(resume = resume)
@@ -58,7 +51,7 @@ def upload():
         else:
             return redirect(request.url)
     else:
-        if "email" in session and "password" in session:
+        if "email" in session:
             return render_template("upload.html")
         else:
             return redirect(url_for("home"))
@@ -76,9 +69,10 @@ def edit():
 @app.route("/results/", methods=["GET", "POST"])
 def results():
     if request.method == "POST":
+        users_db.update_user(email=session['email'], selected_jobs=session['selected links'])
         return redirect(url_for('submit'))
     else:
-        if "skills" in session:
+        if "filename" in session:
             return render_template("results.html")
         else:
             return redirect(url_for("edit"))
@@ -98,23 +92,30 @@ def logout():
     [session.pop(key) for key in list(session.keys())]
     return redirect(url_for("home"))
 
-# <--- /api/ --->
+# <--- /api/ endpoints --->
 
 @app.route("/api/fetch-ents", methods=["GET"])
 def fetch_ents():
-    return json.dumps(named_temp_file())
+    accepted_columns = ['fname', 'lname', 'phone', 'degree', 'skills', 'role', 'location']
+    data = users_db.read_user(email=session['email'], auth=False)
+    filtered_data = {key: value for key, value in data.items() if key in accepted_columns}
+    return json.dumps(filtered_data)
 
 @app.route("/api/upload-resume-data", methods=["POST"])
 def upload_resume_data():
     res = request.get_json()
-    for key, value in res.items():
-        session[key] = value
+    users_db.update_user(email=session['email'], ents_dict=res)
     return res
 
 @app.route("/api/fetch-relevant-postings", methods=["GET"])
 def fetch_relevant_postings():
     all_jobs = {}
-    job_sim = Similarity(role = session['role'], location = session['location'], resume_data = f"{session['skills']} {session['role']} {session['certifications']}")
+    data = users_db.read_user(session['email'], auth=False)
+    role = data['role']
+    location = data['location']
+    skills = data['skills']
+    certifications = data['degree']
+    job_sim = Similarity(role = role, location = location, resume_data = f"{skills} {role} {certifications}")
     jobs = job_sim.get_jobs()
     for job_index in range(len(jobs)):
         posting, confidence = jobs[job_index]
@@ -139,30 +140,9 @@ def upload_checkbox_state():
     session['selected links'] = selected_links
     return res
 
-@app.route("/api/get-auto-app-results", methods=["GET"])
-def get_auto_app_results():
-    email = session['email']
-    password = session['password']
-    fname = session['fname']
-    lname = session['lname']
-    phone = session['phone']
-    jobtitle = session['role']
-    location = session['location']
-    successful_count = 0
-    error_count = 0
-
-    auto_apply.register(email=email, password=password)
-    for url in session['selected links']:
-        result = named_temp_file(url=url, email=email, password=password, fname=fname, lname=lname, phone=phone, jobtitle=jobtitle, location=location)
-        if not isinstance(result, Exception):
-            successful_count += 1
-        else:
-            error_count += 1
-    session.pop('selected links')
-    return json.dumps({'successful': successful_count, 'errors': error_count})
-
 if __name__ == '__main__':
     resume_storage = StorageManager()
     resume_parser = ResumeParser()
-    auto_apply = AutoApply()
+    users_db = UsersDatabase()
+    mailer = Mailer()
     app.run(debug = True)

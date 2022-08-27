@@ -10,6 +10,3 @@ class StorageManager:
 
     def insert_resume(self, resume):
         return self.storage.child(f'{secure_filename(resume.filename)}').put(resume)
-    
-    def get_resume_url(self, filename):
-        return self.storage.child(secure_filename(filename)).get_url(None)

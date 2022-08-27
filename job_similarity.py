@@ -2,7 +2,7 @@ import spacy
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-from database import Database
+from database.jobs_database import Database
 
 class Similarity:
     def __init__(self, role, location, resume_data):

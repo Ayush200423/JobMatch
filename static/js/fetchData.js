@@ -2,7 +2,7 @@ const replaceInputValues = {
     'fname': 'fname',
     'lname': 'lname',
     'phone': 'phone',
-    'certifications': 'degree',
+    'degree': 'degree',
     'skills': 'skills',
     'role': 'role',
     'location': 'location'
@@ -85,14 +85,5 @@ function sendCheckboxState(e) {
     })
     .catch((error) => {
         console.error('Error:', error)
-    })
-}
-
-function getAppsResults() {
-    fetch("/api/get-auto-app-results")
-    .then((res) => res.json())
-    .then((data) => {
-        document.querySelector('#successful-apps').textContent = data['successful']
-        document.querySelector('#error-apps').textContent = data['errors']
     })
 }

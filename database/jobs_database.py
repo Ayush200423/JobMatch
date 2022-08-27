@@ -13,7 +13,7 @@ class Database:
         location = posting_info['location']
         company = posting_info['company']
         description = posting_info['description']
-        delete_posting_date = datetime.date.today() + datetime.timedelta(days = 7)
+        delete_posting_date = datetime.date.today() + datetime.timedelta(days = 3)
         try:
             self.db_cursor.execute(f'INSERT INTO {country}_jobs (date, url, role, location, company, description) VALUES (%s,%s,%s,%s,%s,%s)', (delete_posting_date, url, title, location, company, description))
             self.commit()

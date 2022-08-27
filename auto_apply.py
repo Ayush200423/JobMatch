@@ -9,7 +9,6 @@ import time
 
 class AutoApply:
     def __init__(self):
-        self.q_num = 4
         self.options = Options()
         self.options.headless = False
 

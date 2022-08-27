@@ -4,7 +4,7 @@ secret_key.py
 serviceAccount.json
 storage_config.py
 /resumeparser/convert_data.py
-active_files/
+mail_config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

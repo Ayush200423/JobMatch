@@ -1,5 +1,6 @@
 import spacy
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfFileReader
+import io
 
 class ResumeParser:
     def __init__(self):
@@ -19,10 +20,11 @@ class ResumeParser:
             'location': []
         }
     
-    def pdf_to_txt(self, file_path):
-        reader = PdfReader(file_path)
-        page = reader.pages[0]
-        self.text = page.extract_text()
+    def pdf_to_txt(self, resume_file):
+        pdfFileObj = io.BytesIO(resume_file.read())
+        pdfReader = PdfFileReader(pdfFileObj)
+        pageObj = pdfReader.getPage(0) 
+        self.text = pageObj.extractText()
     
     def find_ents(self):
         doc = self.nlp(self.text)
