@@ -145,4 +145,4 @@ if __name__ == '__main__':
     resume_parser = ResumeParser()
     users_db = UsersDatabase()
     mailer = Mailer()
-    app.run(debug = True)
+    app.run()
