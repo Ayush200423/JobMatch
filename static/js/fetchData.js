@@ -9,7 +9,7 @@ const replaceInputValues = {
 }
 
 function getEntsData() {
-    fetch('/api/fetch-ents')
+    fetch('/api/resume-data')
     .then((res) => res.json())
     .then((data) => {
         for (const [input_id, data_key] of Object.entries(replaceInputValues)) {
@@ -22,7 +22,7 @@ function sendResumeUpdates(e) {
     e.preventDefault();
     const boxName = e.target.getAttribute("id");
     const boxValue = e.target.value;
-    fetch('/api/upload-resume-data', {
+    fetch('/api/resume-data', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ function sendResumeUpdates(e) {
 }
 
 function getJobPostings(callback) {
-    fetch('/api/fetch-relevant-postings')
+    fetch('/api/relevant-postings')
     .then((res) => res.json())
     .then((data) => {
         let isPosting = false;
@@ -72,7 +72,7 @@ function sendCheckboxState(e) {
     if (e.target.checked) {
         state = "append"
     }
-    fetch('/api/upload-checkbox-state', {
+    fetch('/api/relevant-postings', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
