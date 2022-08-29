@@ -183,5 +183,3 @@ if __name__ == '__main__':
     jobs_db = JobsDatabase()
     mailer = Mailer()
     app.run()
-
-# TODO: Try, catch block in fillForm.js, get content from sync. If exception, break / quit.

@@ -178,13 +178,13 @@ html {
     color: #fff;
 }
 
-.content label[for="key"], [for="password"], [for="email"] {
+.content label[for="password"], [for="email"] {
     display: block;
     font-size: 15px;
     padding: 5px 0 5px 10px;
 }
 
-.content input[type="key"], [type="email"], [type="password"], [type="submit"] {
+.content input[type="email"], [type="password"], [type="submit"] {
     padding: 10px;
     width: 500px;
     font-size: 15px;
@@ -194,7 +194,7 @@ html {
     transition: 0.3s;
 }
 
-.content input[type="key"]:focus, [type="email"]:focus, [type="password"]:focus {
+.content input[type="email"]:focus, [type="password"]:focus {
     border: 1px solid #0095FF;
     outline: none;
 }

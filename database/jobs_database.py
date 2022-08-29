@@ -2,7 +2,7 @@ import datetime
 
 from db_setup import db_connect
 
-class Database:
+class JobsDatabase:
     def __init__(self):
         self.mysql_db = db_connect
         self.db_cursor = self.mysql_db.cursor()
