@@ -2,7 +2,7 @@ import spacy
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-from database.jobs_database import Database
+from database.jobs_database import JobsDatabase
 
 class Similarity:
     def __init__(self, role, location, resume_data):
@@ -14,7 +14,7 @@ class Similarity:
         self.nlp = spacy.load('en_core_web_md', exclude = ["tagger", "parser", "senter", "attribute_ruler", "lemmatizer", "ner"])
         self.stop_words = set(stopwords.words('english'))
         self.resume_doc = self.nlp_resume_doc()
-        self.db = Database()
+        self.db = JobsDatabase()
         self.db_search_results = set()
         self.similarity_threshold = 0.85
         self.jobs = []
