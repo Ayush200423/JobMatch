@@ -11,6 +11,13 @@ class ResumeParser:
         pdfReader = PdfFileReader(pdfFileObj)
         pageObj = pdfReader.getPage(0) 
         self.text = pageObj.extractText()
+        resume_text = self.text.strip()
+        replace_values = [[' ,', ', '], ['  ', ' ']]
+        for old_val, new_val in replace_values:
+            resume_text = resume_text.replace(old_val, new_val)
+        text_encoded = resume_text.encode("ascii", "ignore")
+        text_decoded = text_encoded.decode()
+        return text_decoded
     
     def find_ents(self):
         ents_dict = {

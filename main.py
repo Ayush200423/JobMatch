@@ -7,6 +7,7 @@ from database.users_database import UsersDatabase
 from database.jobs_database import JobsDatabase
 from resume_scraper import ResumeParser
 from job_similarity import Similarity
+from training_data_generator import DataGenerator
 from mail import Mailer
 
 app = Flask(__name__)
@@ -41,12 +42,11 @@ def home():
 def upload():
     if request.method == "POST":
         resume = request.files['resume-file']
-        resume_parser.pdf_to_txt(resume)
+        session['resume contents'] = resume_parser.pdf_to_txt(resume)
         ents_dict = resume_parser.find_ents()
         users_db.update_user(email=session['email'], args_dict=ents_dict)
         if resume.filename != '':
             session['filename'] = resume.filename
-            resume_storage.insert_resume(resume = resume)
             return redirect(url_for("edit"))
         else:
             return redirect(request.url)
@@ -59,6 +59,7 @@ def upload():
 @app.route("/edit/", methods=["GET", "POST"])
 def edit():
     if request.method == "POST":
+        generator.create_data(email = session['email'], text = session['resume contents'])
         return redirect(url_for("results"))
     else:
         if "filename" in session:
@@ -180,5 +181,6 @@ if __name__ == '__main__':
     resume_parser = ResumeParser()
     users_db = UsersDatabase()
     jobs_db = JobsDatabase()
+    generator = DataGenerator()
     mailer = Mailer()
     app.run()

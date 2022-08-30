@@ -1,5 +1,6 @@
 import pyrebase
 from werkzeug.utils import secure_filename
+import os
 
 from storage_config import config
 
@@ -8,5 +9,5 @@ class StorageManager:
         firebase = pyrebase.initialize_app(config)
         self.storage = firebase.storage()
 
-    def insert_resume(self, resume):
-        return self.storage.child(f'{secure_filename(resume.filename)}').put(resume)
+    def insert_file(self, file):
+        return self.storage.child(f'{secure_filename(os.path.basename(file.name))}').put(file.name)
