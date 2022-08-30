@@ -1,6 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 import json
-from mail import Mailer
 
 from secret_key import key
 from storage import StorageManager
