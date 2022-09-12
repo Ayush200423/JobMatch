@@ -5,7 +5,7 @@ import requests
 from concurrent.futures import ThreadPoolExecutor
 
 from format_location import CorrectFormatting
-from database.jobs_database import Database
+from database.jobs_database import JobsDatabase
 
 class Scraper:
     def __init__(self, country, role = 'All'):
