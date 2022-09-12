@@ -101,7 +101,7 @@ class Scraper:
         return self.jobs
 
 if __name__ == '__main__':
-    db = Database()
+    db = JobsDatabase()
     countries = ['CANADA', 'USA']
     for country in countries:
         for job in Scraper(country = country).get_jobs(100):
