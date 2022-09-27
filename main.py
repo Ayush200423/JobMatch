@@ -8,7 +8,6 @@ from database.jobs_database import JobsDatabase
 from resume_scraper import ResumeParser
 from job_similarity import Similarity
 from training_data_generator import DataGenerator
-from mail import Mailer
 
 app = Flask(__name__)
 app.secret_key = key
@@ -31,8 +30,6 @@ def home():
             except:
                 return render_template('home.html')
             else:
-                mailer.setup_email(user_email = email)
-                mailer.send_email()
                 session['email'] = email
                 return redirect(url_for("upload"))
     else:
@@ -171,10 +168,13 @@ def posting_details():
             else:
                 country = 'usa'
             posting_info = jobs_db.get_job(country=country, url=url)
-            result = {key: value for key, value in posting_info.items() if key != 'description'}
-            results.append(result)
+            try:
+                result = {key: value for key, value in posting_info.items() if key != 'description'}
+                results.append(result)
+            except:
+                print('empty')
         return json.dumps({'results': results})
-    return json.dumps({'Error': 'No job postings found'})
+    return json.dumps({'results': []})
 
 if __name__ == '__main__':
     resume_storage = StorageManager()
@@ -182,5 +182,4 @@ if __name__ == '__main__':
     users_db = UsersDatabase()
     jobs_db = JobsDatabase()
     generator = DataGenerator()
-    mailer = Mailer()
-    app.run()
+    app.run(debug=True)
