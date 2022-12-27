@@ -18,7 +18,7 @@ JobMatch is an easier and faster way to apply to multiple jobs you may be qualif
 [![Watch the video](https://img.youtube.com/vi/_jINZZqrpFs/maxresdefault.jpg)](https://youtu.be/_jINZZqrpFs)
 ## Under the Hood
 
-- JobMatch automatically generates training / testing data, based on your edits, in a JSON format, and uploads it to Firebase Cloud Storage, essential to creating increasingly accurate models in the future
+- JobMatch automatically creates crowdsourced training data, based on your edits, in a JSON format, and uploads it to Firebase Cloud Storage, essential to creating increasingly accurate models in the future
 - Natural Language Processing is used to extract resume data and to match them to job descriptions
 - The chrome extension communicates with the JobMatch backend API endpoints for retrieval of data
 - Cronjob scrapes 4,000 job posting links regularly within seconds
